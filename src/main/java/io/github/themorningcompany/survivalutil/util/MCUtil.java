@@ -7,9 +7,15 @@ import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.gui.screen.MultiplayerScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.realms.RealmsBridgeScreen;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.util.Objects;
 
 public class MCUtil {
     public static void sendPlayerMessage(ClientPlayerEntity player, String message) {
@@ -22,6 +28,36 @@ public class MCUtil {
 
     public static boolean isPlayerInSurvival(PlayerEntity player) {
         return !(player.isCreative() || player.isSpectator());
+    }
+
+    public static String getDisconnectReason(PlayerEntity player, DamageSource damageSource) {
+        String playerDisplayName = player.getDisplayName().getString();
+        String damageLocation;
+        String damageType;
+
+        if (damageSource == null) {
+            damageLocation = "N/A";
+            damageType = "None";
+        } else {
+            if (damageSource.getDamageLocation() == null) {
+                damageLocation = "N/A";
+            } else {
+                damageLocation = damageSource.getDamageLocation().toString();
+            }
+            damageType = damageSource.getDamageType();
+        }
+
+        return String.format("Player Name: %s | Location: %s | Damage Source: %s", playerDisplayName, damageLocation, damageType);
+    }
+
+    public static void copyDisconnectReason(PlayerEntity player, DamageSource damageSource) {
+        new Thread(() -> {
+            String disconnectReason = getDisconnectReason(player, damageSource);
+            System.out.println(disconnectReason);
+            StringSelection selection = new StringSelection(disconnectReason);
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(selection, null);
+        }, "Disconnect Reason Copy").start();
     }
 
     public static void disconnectFromServer() {

@@ -22,7 +22,7 @@ import java.util.List;
 @Mod("survivalutil")
 public class SurvivalUtil
 {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getFormatterLogger("SurvivalUtil");
     public static final String MOD_ID = "survivalutil";
 
     public static List<Module> modules = new ArrayList<Module>();
@@ -40,6 +40,10 @@ public class SurvivalUtil
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new AFKUtil());
+
+        System.setProperty("java.awt.headless", "false");
+
+        LOGGER.info("Enabling mod...");
     }
 
     private void setup(final FMLCommonSetupEvent event) {
