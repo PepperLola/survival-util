@@ -2,6 +2,7 @@ package io.github.themorningcompany.survivalutil;
 
 import io.github.themorningcompany.survivalutil.modules.Module;
 import io.github.themorningcompany.survivalutil.modules.util.AutoDisconnectModule;
+import io.github.themorningcompany.survivalutil.modules.util.DurabilityNotificationModule;
 import io.github.themorningcompany.survivalutil.modules.util.MobAlertModule;
 import io.github.themorningcompany.survivalutil.util.AFKUtil;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,7 +31,8 @@ public class SurvivalUtil
     static {
         modules.addAll(Arrays.asList(
                 new MobAlertModule(),
-                new AutoDisconnectModule()
+                new AutoDisconnectModule(),
+                new DurabilityNotificationModule()
         ));
     }
 

@@ -44,9 +44,11 @@ public class AutoDisconnectModule extends Module {
         PlayerEntity player = Minecraft.getInstance().player;
         if (player == null) return;
         double playerHealth = player.getHealth();
-        if ((playerHealth < 1 && AFKUtil.isAFK() && MCUtil.isPlayerInSurvival(player)) || shouldDisconnect) {
+        if (playerHealth < 1) {
             MCUtil.copyDisconnectReason(player, lastDamageSource);
-            MCUtil.disconnectFromServer();
+            if (MCUtil.isPlayerInSurvival(player) || shouldDisconnect) {
+                MCUtil.disconnectFromServer();
+            }
         }
         shouldDisconnect = false;
     }

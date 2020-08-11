@@ -5,19 +5,35 @@ import io.github.themorningcompany.survivalutil.util.MCUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MobAlertModule extends Module {
     private List<Entity> currentEntities;
     private List<Entity> previousEntities;
+
+    private static Map<EntityType, String> mobColors = new HashMap<>();
+
+    static {
+        mobColors.put(EntityType.CREEPER, TextFormatting.GREEN.toString());
+        mobColors.put(EntityType.ZOMBIE, TextFormatting.DARK_GREEN.toString());
+        mobColors.put(EntityType.ZOMBIE_VILLAGER, TextFormatting.DARK_GREEN.toString());
+        mobColors.put(EntityType.ZOMBIE_HORSE, TextFormatting.DARK_GREEN.toString());
+        mobColors.put(EntityType.SPIDER, TextFormatting.DARK_PURPLE.toString());
+        mobColors.put(EntityType.ENDERMAN, TextFormatting.LIGHT_PURPLE.toString());
+        mobColors.put(EntityType.SKELETON, TextFormatting.GRAY.toString());
+    }
 
     public MobAlertModule() {
         super("mob-alert", "Mob Alerts", ModuleType.UTIL);
@@ -53,6 +69,9 @@ public class MobAlertModule extends Module {
         if (player == null) return;
         if (entity == null) return;
         String entityName = I18n.format(entity.getType().getName().getString());
+        if (mobColors.containsKey(entity.getType())) {
+            entityName = mobColors.get(entity.getType()) + entityName;
+        }
         MCUtil.sendPlayerMessage(Minecraft.getInstance().player, String.format("%s has entered the radius.", entityName));
     }
 
