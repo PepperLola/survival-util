@@ -1,5 +1,6 @@
 package net.themorningcompany.survivalutil.modules.util;
 
+import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.themorningcompany.survivalutil.modules.Module;
 import net.themorningcompany.survivalutil.util.AFKUtil;
 import net.themorningcompany.survivalutil.util.MCUtil;
@@ -14,7 +15,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class AutoDisconnectModule extends Module {
 
-    private boolean shouldDisconnect = false;
+    private boolean shouldDisconnect = true;
     private DamageSource lastDamageSource = null;
 
     public AutoDisconnectModule() {
@@ -36,16 +37,32 @@ public class AutoDisconnectModule extends Module {
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
-        PlayerEntity player = Minecraft.getInstance().player;
+        ClientPlayerEntity player = Minecraft.getInstance().player;
         if (player == null) return;
+
+
         double playerHealth = player.getHealth();
-        if (playerHealth < 1) {
+        if (playerHealth <= 1 && playerHealth > 0 && shouldDisconnect) {
             MCUtil.copyDisconnectReason(player, lastDamageSource);
             if (MCUtil.isPlayerInSurvival(player) || shouldDisconnect) {
                 MCUtil.disconnectFromServer();
+                shouldDisconnect = false;
             }
         }
-        shouldDisconnect = false;
+    }
+
+    @SubscribeEvent
+    public void onPlayerRegen(LivingHealEvent event) {
+        ClientPlayerEntity player = Minecraft.getInstance().player;
+        if (player == null) return;
+        if (!(event.getEntity() instanceof PlayerEntity)) return;
+        if (!(event.getEntity().equals(player))) return;
+
+        double playerHealth = player.getHealth();
+        System.out.println("PLAYER DAMAGED " + playerHealth + " " + shouldDisconnect);
+        if (playerHealth > 1) {
+            shouldDisconnect = true;
+        }
     }
 
     @SubscribeEvent
@@ -53,7 +70,7 @@ public class AutoDisconnectModule extends Module {
         ClientPlayerEntity player = Minecraft.getInstance().player;
         if (player == null) return;
         if (!(event.getEntity() instanceof PlayerEntity)) return;
-        if (!(event.getEntity() == player)) return;
+        if (!(event.getEntity().equals(player))) return;
 
         lastDamageSource = event.getSource();
     }

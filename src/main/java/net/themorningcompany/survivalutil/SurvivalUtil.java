@@ -1,5 +1,6 @@
 package net.themorningcompany.survivalutil;
 
+import com.google.gson.Gson;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -8,6 +9,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.themorningcompany.survivalutil.modules.Module;
+import net.themorningcompany.survivalutil.modules.fun.OogishplekModule;
 import net.themorningcompany.survivalutil.modules.util.AutoDisconnectModule;
 import net.themorningcompany.survivalutil.modules.util.DurabilityNotificationModule;
 import net.themorningcompany.survivalutil.modules.util.MobAlertModule;
@@ -26,13 +28,16 @@ public class SurvivalUtil
     private static final Logger LOGGER = LogManager.getFormatterLogger("SurvivalUtil");
     public static final String MOD_ID = "survivalutil";
 
+    public static final Gson gson = new Gson();
+
     public static List<Module> modules = new ArrayList<Module>();
 
     static {
         modules.addAll(Arrays.asList(
                 new MobAlertModule(),
                 new AutoDisconnectModule(),
-                new DurabilityNotificationModule()
+                new DurabilityNotificationModule(),
+                new OogishplekModule()
         ));
     }
 

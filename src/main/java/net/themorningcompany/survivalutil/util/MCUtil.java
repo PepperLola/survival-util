@@ -15,7 +15,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.util.Objects;
 
 public class MCUtil {
     public static void sendPlayerMessage(ClientPlayerEntity player, String message) {
@@ -35,15 +34,11 @@ public class MCUtil {
         String damageLocation;
         String damageType;
 
+        damageLocation = player.getPositionVec().toString();
+
         if (damageSource == null) {
-            damageLocation = "N/A";
             damageType = "None";
         } else {
-            if (damageSource.getDamageLocation() == null) {
-                damageLocation = "N/A";
-            } else {
-                damageLocation = damageSource.getDamageLocation().toString();
-            }
             damageType = damageSource.getDamageType();
         }
 

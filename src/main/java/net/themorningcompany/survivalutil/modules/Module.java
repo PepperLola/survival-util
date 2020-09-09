@@ -33,6 +33,7 @@ public class Module {
     }
 
     public static enum ModuleType {
+        FUN,
         UTIL
     }
 }
