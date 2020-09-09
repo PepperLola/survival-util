@@ -11,6 +11,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.themorningcompany.survivalutil.modules.Module;
 import net.themorningcompany.survivalutil.modules.fun.OogishplekModule;
 import net.themorningcompany.survivalutil.modules.util.AutoDisconnectModule;
+import net.themorningcompany.survivalutil.modules.util.AutoWaterBucketModule;
 import net.themorningcompany.survivalutil.modules.util.DurabilityNotificationModule;
 import net.themorningcompany.survivalutil.modules.util.MobAlertModule;
 import net.themorningcompany.survivalutil.util.AFKUtil;
@@ -37,7 +38,8 @@ public class SurvivalUtil
                 new MobAlertModule(),
                 new AutoDisconnectModule(),
                 new DurabilityNotificationModule(),
-                new OogishplekModule()
+                new OogishplekModule(),
+                new AutoWaterBucketModule()
         ));
     }
 

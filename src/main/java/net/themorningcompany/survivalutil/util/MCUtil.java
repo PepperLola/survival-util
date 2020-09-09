@@ -1,20 +1,28 @@
 package net.themorningcompany.survivalutil.util;
 
+import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.DirtMessageScreen;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.gui.screen.MultiplayerScreen;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.realms.RealmsBridgeScreen;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import org.apache.commons.lang3.ArrayUtils;
+import sun.security.util.ArrayUtil;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.Arrays;
 
 public class MCUtil {
     public static void sendPlayerMessage(ClientPlayerEntity player, String message) {
@@ -77,5 +85,16 @@ public class MCUtil {
         } else {
             Minecraft.getInstance().displayGuiScreen(new MultiplayerScreen(new MainMenuScreen()));
         }
+    }
+
+    public static int getSlotOfItem(PlayerEntity player, Item itemStack) {
+        System.out.println(itemStack);
+        PlayerInventory inv = player.inventory;
+        for (int i = 0; i < inv.mainInventory.size(); i++) {
+            if (inv.mainInventory.get(i).getItem().equals(itemStack)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
