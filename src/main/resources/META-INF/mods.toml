@@ -1,0 +1,49 @@
+
+modLoader="javafml" #mandatory
+
+loaderVersion="[32,)" #mandatory
+
+license="All rights reserved"
+
+issueTrackerURL="http://my.issue.tracker/" #optional
+
+[[mods]] #mandatory
+
+modId="survivalutil" #mandatory
+
+version="${file.jarVersion}" #mandatory
+
+displayName="Survival Util" #mandatory
+
+updateJSONURL="http://myurl.me/" #optional
+
+displayURL="http://example.com/" #optional
+
+logoFile="examplemod.png" #optional
+
+credits="Thanks to myself for making this mod :)" #optional
+
+authors="Created and maintained by palight" #optional
+# The description text for the mod (multi line!) (#mandatory)
+description='''
+This mod is intended to provide features that help with Minecraft survival. DO NOT USE THIS MOD ON PUBLIC SERVERS. I am not responsible for any repercussions that may be caused by using this mod.
+'''
+# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
+[[dependencies.survivalutil]] #optional
+    # the modid of the dependency
+    modId="forge" #mandatory
+    # Does this dependency have to exist - if not, ordering below must be specified
+    mandatory=true #mandatory
+    # The version range of the dependency
+    versionRange="[32,)" #mandatory
+    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+    ordering="NONE"
+    # Side this dependency is applied on - BOTH, CLIENT or SERVER
+    side="BOTH"
+# Here's another dependency
+[[dependencies.survivalutil]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.3]"
+    ordering="NONE"
+    side="BOTH"
