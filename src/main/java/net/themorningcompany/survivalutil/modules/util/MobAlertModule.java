@@ -1,12 +1,11 @@
-package io.github.themorningcompany.survivalutil.modules.util;
+package net.themorningcompany.survivalutil.modules.util;
 
-import io.github.themorningcompany.survivalutil.modules.Module;
-import io.github.themorningcompany.survivalutil.util.MCUtil;
+import net.themorningcompany.survivalutil.modules.Module;
+import net.themorningcompany.survivalutil.util.MCUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -43,6 +42,7 @@ public class MobAlertModule extends Module {
     public void onClientTick(TickEvent.ClientTickEvent event) {
         previousEntities = currentEntities;
         PlayerEntity player = Minecraft.getInstance().player;
+        if (!this.isEnabled()) return;
         if (player == null) return;
         Vector3d pos1 = player.getPositionVec().subtract(10, 10, 10);
         Vector3d pos2 = player.getPositionVec().add(10, 10, 10);
@@ -66,6 +66,7 @@ public class MobAlertModule extends Module {
 
     private void mobEntered(Entity entity) {
         PlayerEntity player = Minecraft.getInstance().player;
+        if (!this.isEnabled()) return;
         if (player == null) return;
         if (entity == null) return;
         String entityName = I18n.format(entity.getType().getName().getString());
@@ -77,6 +78,7 @@ public class MobAlertModule extends Module {
 
     private void mobLeft(Entity entity) {
         PlayerEntity player = Minecraft.getInstance().player;
+        if (!this.isEnabled()) return;
         if (player == null) return;
         if (entity == null) return;
         String entityName = I18n.format(entity.getType().getName().getString());

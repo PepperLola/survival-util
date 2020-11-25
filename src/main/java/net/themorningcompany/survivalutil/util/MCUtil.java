@@ -1,4 +1,4 @@
-package io.github.themorningcompany.survivalutil.util;
+package net.themorningcompany.survivalutil.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;

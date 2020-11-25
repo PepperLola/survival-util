@@ -1,11 +1,11 @@
 
 modLoader="javafml" #mandatory
 
-loaderVersion="[32,)" #mandatory
+loaderVersion="[32,35]" #mandatory
 
 license="All rights reserved"
 
-issueTrackerURL="http://my.issue.tracker/" #optional
+#issueTrackerURL="http://my.issue.tracker/" #optional
 
 [[mods]] #mandatory
 
@@ -15,11 +15,11 @@ version="${file.jarVersion}" #mandatory
 
 displayName="Survival Util" #mandatory
 
-updateJSONURL="http://myurl.me/" #optional
+#updateJSONURL="http://myurl.me/" #optional
 
-displayURL="http://example.com/" #optional
+#displayURL="http://example.com/" #optional
 
-logoFile="examplemod.png" #optional
+#logoFile="examplemod.png" #optional
 
 credits="Thanks to myself for making this mod :)" #optional
 
@@ -35,7 +35,7 @@ This mod is intended to provide features that help with Minecraft survival. DO N
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[32,)" #mandatory
+    versionRange="[32,35]" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -44,6 +44,6 @@ This mod is intended to provide features that help with Minecraft survival. DO N
 [[dependencies.survivalutil]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.1]"
+    versionRange="[1.16,1.17)"
     ordering="NONE"
     side="BOTH"

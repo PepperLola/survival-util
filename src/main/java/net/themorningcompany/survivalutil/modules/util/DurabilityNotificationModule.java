@@ -1,23 +1,18 @@
-package io.github.themorningcompany.survivalutil.modules.util;
+package net.themorningcompany.survivalutil.modules.util;
 
-import io.github.themorningcompany.survivalutil.modules.Module;
-import io.github.themorningcompany.survivalutil.util.MCUtil;
+import net.themorningcompany.survivalutil.modules.Module;
+import net.themorningcompany.survivalutil.util.MCUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.item.ItemEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DurabilityNotificationModule extends Module {
 
@@ -30,6 +25,7 @@ public class DurabilityNotificationModule extends Module {
     @SubscribeEvent
     public void onToolUse(TickEvent.ClientTickEvent event) {
         ClientPlayerEntity player = Minecraft.getInstance().player;
+        if (!this.isEnabled()) return;
         if (player == null) return;
         PlayerInventory inv = player.inventory;
 

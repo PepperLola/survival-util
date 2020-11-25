@@ -1,17 +1,12 @@
-package io.github.themorningcompany.survivalutil.modules.util;
+package net.themorningcompany.survivalutil.modules.util;
 
-import io.github.themorningcompany.survivalutil.modules.Module;
-import io.github.themorningcompany.survivalutil.util.AFKUtil;
-import io.github.themorningcompany.survivalutil.util.MCUtil;
+import net.themorningcompany.survivalutil.modules.Module;
+import net.themorningcompany.survivalutil.util.AFKUtil;
+import net.themorningcompany.survivalutil.util.MCUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.screen.DirtMessageScreen;
-import net.minecraft.client.gui.screen.MainMenuScreen;
-import net.minecraft.client.gui.screen.MultiplayerScreen;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.realms.RealmsBridgeScreen;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.client.event.sound.SoundEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -29,6 +24,7 @@ public class AutoDisconnectModule extends Module {
     @SubscribeEvent
     public void onSoundPlay(SoundEvent.SoundSourceEvent event) {
         PlayerEntity player = Minecraft.getInstance().player;
+        if (!this.isEnabled()) return;
         if (player == null) return;
 
         boolean isCreeper = event.getName().equals("entity.creeper.primed");
@@ -42,6 +38,7 @@ public class AutoDisconnectModule extends Module {
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
         PlayerEntity player = Minecraft.getInstance().player;
+        if (!this.isEnabled()) return;
         if (player == null) return;
         double playerHealth = player.getHealth();
         if (playerHealth < 1) {
@@ -56,6 +53,7 @@ public class AutoDisconnectModule extends Module {
     @SubscribeEvent
     public void onDamage(LivingDamageEvent event) {
         ClientPlayerEntity player = Minecraft.getInstance().player;
+        if (!this.isEnabled()) return;
         if (player == null) return;
         if (!(event.getEntity() instanceof PlayerEntity)) return;
         if (!(event.getEntity() == player)) return;

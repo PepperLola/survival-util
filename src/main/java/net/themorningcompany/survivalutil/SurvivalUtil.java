@@ -1,10 +1,15 @@
-package io.github.themorningcompany.survivalutil;
+package net.themorningcompany.survivalutil;
 
-import io.github.themorningcompany.survivalutil.modules.Module;
-import io.github.themorningcompany.survivalutil.modules.util.AutoDisconnectModule;
-import io.github.themorningcompany.survivalutil.modules.util.DurabilityNotificationModule;
-import io.github.themorningcompany.survivalutil.modules.util.MobAlertModule;
-import io.github.themorningcompany.survivalutil.util.AFKUtil;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.themorningcompany.survivalutil.command.ModuleCommand;
+import net.themorningcompany.survivalutil.modules.Module;
+import net.themorningcompany.survivalutil.modules.util.AutoDisconnectModule;
+import net.themorningcompany.survivalutil.modules.util.DurabilityNotificationModule;
+import net.themorningcompany.survivalutil.modules.util.ElytraSwitchModule;
+import net.themorningcompany.survivalutil.modules.util.MobAlertModule;
+import net.themorningcompany.survivalutil.util.AFKUtil;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,6 +30,7 @@ public class SurvivalUtil
 {
     private static final Logger LOGGER = LogManager.getFormatterLogger("SurvivalUtil");
     public static final String MOD_ID = "survivalutil";
+    public static String MOD_CATEGORY = "Survival Util";
 
     public static List<Module> modules = new ArrayList<Module>();
 
@@ -32,7 +38,8 @@ public class SurvivalUtil
         modules.addAll(Arrays.asList(
                 new MobAlertModule(),
                 new AutoDisconnectModule(),
-                new DurabilityNotificationModule()
+                new DurabilityNotificationModule(),
+                new ElytraSwitchModule()
         ));
     }
 
@@ -53,12 +60,19 @@ public class SurvivalUtil
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         //LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+        ClientRegistry.registerKeyBinding(new KeyBinding("key.elytraSwitch", 66, "Survival Util"));
     }
 
     @SubscribeEvent
     public void onServerStarting(FMLServerStartingEvent event) {
         // do something when the server starts
         //LOGGER.info("HELLO from server starting");
+    }
+
+    @SubscribeEvent
+    public void onRegisterCommands(RegisterCommandsEvent event) {
+        LOGGER.info("REGISTERING COMMANDS!");
+        ModuleCommand.register(event.getDispatcher());
     }
 }
 
